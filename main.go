@@ -1,8 +1,8 @@
 package main
 
 import (
-	"database/sql" // Usado para realizar consultas.
-	"log"
+	"database/sql"  // Usado para realizar consultas.
+	"log"           // Usado para mostrar mensagens no console.
 	"net/http"      // Usado para gerenciar URLs e o servidor web.
 	"text/template" // Usado para gerenciar templates.
 
@@ -11,22 +11,26 @@ import (
 
 // Struct que vai ser usado para exibir os dados no template.
 type Names struct {
-	Id    int
-	Name  string
-	Email string
+	Id    int    // Identificador único.
+	Name  string // Nome.
+	Email string // E-mail.
 }
 
-// Função que abre a conexão com o banco.
+// Função que abre a conexão com o banco de dados.
 func dbConn() (db *sql.DB) {
-	dbDriver := "mysql"
-	dbUser := "root"
-	dbPass := ""
-	dbName := "crud"
+	dbDriver := "mysql" // Nome do SGBD.
+	dbUser := "root"    // Usuário.
+	dbPass := ""        // Senha.
+	dbName := "crud"    // Nome do banco de dados.
 
+	// Abre uma conexão com o banco de dados.
 	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
+	// Verifica se houve erros.
 	if err != nil {
+		// Encerra a aplicação em caso de erros.
 		panic(err.Error())
 	}
+	// Retorna a conexão com o banco de dados.
 	return db
 }
 
@@ -36,6 +40,7 @@ var tmpl = template.Must(template.ParseGlob("tmpl/*"))
 
 // Função usada para renderizar o arquivo Index.
 func Index(w http.ResponseWriter, r *http.Request) {
+	log.Println("Abrindo pagina principal.")
 	// Abre a conexão com o banco.
 	db := dbConn()
 	// Realiza a consulta no banco e trata os erros.
@@ -71,6 +76,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Show(w http.ResponseWriter, r *http.Request) {
+	log.Println("Abrindo pagina de visualização.")
 	db := dbConn()
 	// Pega o id do parâmetro da URL.
 	nId := r.URL.Query().Get("id")
@@ -107,6 +113,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 }
 
 func Edit(w http.ResponseWriter, r *http.Request) {
+	log.Println("Abrindo pagina de atualização.")
 	db := dbConn()
 	nId := r.URL.Query().Get("id")
 	selDB, err := db.Query("SELECT * FROM `names` WHERE `id` = ?", nId)
@@ -130,6 +137,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 }
 
 func Insert(w http.ResponseWriter, r *http.Request) {
+	log.Println("Inserindo novos dados.")
 	db := dbConn()
 	// Verifica qual é o método do formulário passado.
 	if r.Method == "POST" {
@@ -152,6 +160,7 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
+	log.Println("Atualizando dados.")
 	db := dbConn()
 	if r.Method == "POST" {
 		name := r.FormValue("name")
@@ -170,6 +179,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {
+	log.Println("Removendo dados.")
 	db := dbConn()
 	nId := r.URL.Query().Get("id")
 	delForm, err := db.Prepare("DELETE FROM `names` WHERE `id` = ?")
@@ -197,5 +207,5 @@ func main() {
 	http.HandleFunc("/update", Update)
 	http.HandleFunc("/delete", Delete)
 
-	http.ListenAndServe("localhost:9000", nil)
+	http.ListenAndServe("localhost:8080", nil)
 }

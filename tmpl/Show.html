@@ -1,9 +1,24 @@
 {{ define "Show" }}
-    {{ template "Header" }}
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Visualizar usuário</title>
+        {{ template "Style" }}
+    </head>
+    <body>
         {{ template "Menu" }}
-        <h2>Registro {{ .Id }} </h2>
-        <p>Nome: {{ .Name }}</p>
-        <p>E-mail: {{ .Email }}</p><br>
-        <a href="/edit?id={{ .Id }}">Editar</a> | <a href="/delete?id={{ .Id }}">Delete</a>
-    {{ template "Footer" }}
+        <div id="main">
+            <h1 id="title">Registro #{{ .Id }} </h1>
+            <p><b>Nome:</b> {{ .Name }}</p>
+            <p><b>E-mail:</b> {{ .Email }}</p><br>
+            <div class="options">
+                <a href="/edit?id={{ .Id }}">🔄 Editar</a>
+                <a href="/delete?id={{ .Id }}">🗑️ Deletar</a>
+            </div>
+        </div>
+    </body>
+</html>
 {{ end }}

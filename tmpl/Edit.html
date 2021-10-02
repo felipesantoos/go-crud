@@ -1,13 +1,30 @@
 {{ define "Edit" }}
-    {{ template "Header" }}
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>CRUD SQL com Go</title>
+        {{ template "Style" }}
+    </head>
+    <body>
         {{ template "Menu" }}
-        <h2>Editar nome e e-mail</h2>
-        <form method="POST" action="update">
-        <input type="hidden" name="uid" value="{{ .Id }}"
-            <label>Nome: </label><input type="text" name="name" value="{{ .Name }}"><br>
-            <label>E-mail: </label><input type="email" name="email" value="{{ .Email }}"><br>
-            <input type="submit" value="Cadastrar">
-        </form><br>
-        <a href="/delete?id={{ .Id }}">Deletar</a>
-    {{ template "Footer" }}
+        <div id="main">
+            <form method="POST" action="update">
+                <h1 id="form-title">Editar nome e e-mail</h1>
+                <input type="hidden" name="uid" value="{{ .Id }}">
+                <div class="input-group">
+                    <label>Nome: </label>
+                    <input type="text" name="name" value="{{ .Name }}">
+                </div>
+                <div class="input-group">
+                    <label>E-mail: </label>
+                    <input type="email" name="email" value="{{ .Email }}"><br>
+                </div>
+                <input type="submit" value="Atualizar">
+            </form><br>
+        </div>
+    </body>
+</html>
 {{ end }}

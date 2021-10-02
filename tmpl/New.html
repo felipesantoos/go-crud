@@ -1,11 +1,29 @@
 {{ define "New" }}
-    {{ template "Header" }}
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Cadastrar usuário</title>
+        {{ template "Style" }}
+    </head>
+    <body>
         {{ template "Menu" }}
-        <h2>Nome e e-mail</h2>
-        <form method="POST" action="insert">
-            <label>Nome: </label><input type="text" name="name"><br>
-            <label>E-mail: </label><input type="email" name="email"><br>
-            <input type="submit" value="Cadastrar">
-        </form>
-    {{ template "Footer" }}
+        <div id="main">
+            <form method="POST" action="insert">
+                <h1 id="form-title">Dados do novo usuário</h1>
+                <div class="input-group">
+                    <label>Nome:</label>
+                    <input type="text" name="name"><br>
+                </div>
+                <div class="input-group">
+                    <label>E-mail:</label>
+                    <input type="email" name="email"><br>
+                </div>
+                <input type="submit" value="Cadastrar">
+            </form>
+        </div>
+    </body>
+</html>
 {{ end }}
