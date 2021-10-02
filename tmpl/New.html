@@ -1,0 +1,11 @@
+{{ define "New" }}
+    {{ template "Header" }}
+        {{ template "Menu" }}
+        <h2>Nome e e-mail</h2>
+        <form method="POST" action="insert">
+            <label>Nome: </label><input type="text" name="name"><br>
+            <label>E-mail: </label><input type="email" name="email"><br>
+            <input type="submit" value="Cadastrar">
+        </form>
+    {{ template "Footer" }}
+{{ end }}
